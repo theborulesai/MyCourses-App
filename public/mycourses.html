@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Manage your enrolled courses - add, edit, delete courses">
+    <title>My Courses - My Courses App</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-brand">📚 My Courses App</div>
+        <div class="nav-links">
+            <a href="/catalog.html" class="nav-link">Course Catalog</a>
+            <a href="/mycourses.html" class="nav-link active">My Courses</a>
+            <span id="userName" class="nav-user"></span>
+            <button id="logoutBtn" class="btn btn-small btn-outline">Logout</button>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <div class="page-header">
+            <h1>My Enrolled Courses</h1>
+            <p>View and manage your enrolled courses</p>
+        </div>
+
+        <!-- add course button -->
+        <div class="actions-bar">
+            <button id="addCourseBtn" class="btn btn-primary">+ Add New Course</button>
+            <span id="courseCount" class="course-count"></span>
+        </div>
+
+        <!-- enrolled courses table -->
+        <div class="table-container">
+            <table class="courses-table" id="coursesTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Details</th>
+                        <th>Semester</th>
+                        <th>Status</th>
+                        <th>Approved By</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="coursesBody">
+                    <tr>
+                        <td colspan="7" class="empty-msg">No courses enrolled yet. Browse the catalog or add a new course!</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Add/Edit Course Modal -->
+    <div id="courseModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="modal-close" id="closeModal">&times;</span>
+            <h2 id="modalTitle">Add New Course</h2>
+            <form id="courseForm">
+                <input type="hidden" id="courseId" value="">
+                <div class="form-group">
+                    <label for="courseTitle">Course Title</label>
+                    <input type="text" id="courseTitle" placeholder="e.g. CS101 - Intro to CS" required>
+                </div>
+                <div class="form-group">
+                    <label for="courseDetails">Details</label>
+                    <textarea id="courseDetails" rows="3" placeholder="Course description..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="courseSemester">Semester</label>
+                    <select id="courseSemester" required>
+                        <option value="">Select Semester</option>
+                        <option value="Semester 1">Semester 1</option>
+                        <option value="Semester 2">Semester 2</option>
+                        <option value="Semester 3">Semester 3</option>
+                        <option value="Semester 4">Semester 4</option>
+                        <option value="Semester 5">Semester 5</option>
+                        <option value="Semester 6">Semester 6</option>
+                        <option value="Semester 7">Semester 7</option>
+                        <option value="Semester 8">Semester 8</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="courseStatus">Enrollment Status</label>
+                    <select id="courseStatus">
+                        <option value="Enrolled">Enrolled</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Dropped">Dropped</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full" id="saveBtn">Save Course</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation -->
+    <div id="deleteModal" class="modal" style="display:none;">
+        <div class="modal-content modal-small">
+            <h2>Delete Course?</h2>
+            <p id="deleteMsg">Are you sure you want to remove this course?</p>
+            <div class="modal-buttons">
+                <button id="confirmDelete" class="btn btn-danger">Yes, Delete</button>
+                <button id="cancelDelete" class="btn btn-outline">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/mycourses.js"></script>
+</body>
+</html>

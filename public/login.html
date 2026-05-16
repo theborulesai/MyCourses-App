@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Courses App - Login</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <h1>📚 My Courses</h1>
+                <p>Course Enrollment & Management System</p>
+            </div>
+
+            <!-- Role Selector -->
+            <div class="role-selector">
+                <label>I am a:</label>
+                <div class="role-options">
+                    <button class="role-btn active" id="roleStudent" onclick="selectRole('student')">🎓 Student</button>
+                    <button class="role-btn" id="roleProfessor" onclick="selectRole('professor')">👨‍🏫 Professor</button>
+                </div>
+            </div>
+
+            <!-- Sign In / Sign Up tabs -->
+            <div class="auth-tabs">
+                <button class="auth-tab active" id="signinTab" onclick="showTab('signin')">Sign In</button>
+                <button class="auth-tab" id="signupTab" onclick="showTab('signup')">Sign Up</button>
+            </div>
+
+            <!-- Sign In Form -->
+            <form id="signinForm">
+                <div class="form-group">
+                    <label for="loginUser">Username</label>
+                    <input type="text" id="loginUser" placeholder="Enter your username" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPass">Password</label>
+                    <input type="password" id="loginPass" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full" id="loginBtn">Sign In</button>
+            </form>
+
+            <!-- Sign Up Form -->
+            <form id="signupForm" style="display:none;">
+                <div class="form-group">
+                    <label for="regName">Full Name</label>
+                    <input type="text" id="regName" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="regUser">Username</label>
+                    <input type="text" id="regUser" placeholder="Choose a username" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPass">Password</label>
+                    <input type="password" id="regPass" placeholder="Choose a password" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full" id="registerBtn">Create Account</button>
+            </form>
+
+            <div id="errorMsg" class="error-msg" style="display:none;"></div>
+            <div id="successMsg" class="success-msg" style="display:none;"></div>
+
+            <div class="login-footer" id="demoInfo">
+                <p>Demo Accounts:</p>
+                <small><b>sainath</b> / pass123 &nbsp;|&nbsp; <b>student</b> / student123</small>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedRole = 'student';
+
+        // check session
+        fetch('/session').then(r => r.json()).then(data => {
+            if (data.loggedIn) {
+                window.location.href = data.user.role === 'professor' ? '/professor.html' : '/catalog.html';
+            }
+        });
+
+        // Role selection
+        function selectRole(role) {
+            selectedRole = role;
+            document.getElementById('roleStudent').classList.toggle('active', role === 'student');
+            document.getElementById('roleProfessor').classList.toggle('active', role === 'professor');
+
+            // update demo credentials shown
+            if (role === 'student') {
+                document.getElementById('demoInfo').innerHTML = '<p>Demo Accounts:</p><small><b>sainath</b> / pass123 &nbsp;|&nbsp; <b>student</b> / student123</small>';
+            } else {
+                document.getElementById('demoInfo').innerHTML = '<p>Demo Accounts:</p><small><b>prof1</b> / prof123 &nbsp;|&nbsp; <b>admin</b> / admin123</small>';
+            }
+
+            // clear messages
+            document.getElementById('errorMsg').style.display = 'none';
+            document.getElementById('successMsg').style.display = 'none';
+        }
+
+        // Tab switching
+        function showTab(tab) {
+            document.getElementById('errorMsg').style.display = 'none';
+            document.getElementById('successMsg').style.display = 'none';
+            if (tab === 'signin') {
+                document.getElementById('signinForm').style.display = 'block';
+                document.getElementById('signupForm').style.display = 'none';
+                document.getElementById('signinTab').classList.add('active');
+                document.getElementById('signupTab').classList.remove('active');
+            } else {
+                document.getElementById('signinForm').style.display = 'none';
+                document.getElementById('signupForm').style.display = 'block';
+                document.getElementById('signupTab').classList.add('active');
+                document.getElementById('signinTab').classList.remove('active');
+            }
+        }
+
+        // Sign In
+        document.getElementById('signinForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('loginUser').value.trim();
+            const password = document.getElementById('loginPass').value.trim();
+            const errorDiv = document.getElementById('errorMsg');
+            const btn = document.getElementById('loginBtn');
+
+            errorDiv.style.display = 'none';
+            btn.textContent = 'Signing in...';
+            btn.disabled = true;
+
+            fetch('/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = data.user.role === 'professor' ? '/professor.html' : '/catalog.html';
+                } else {
+                    errorDiv.textContent = data.error || 'Login failed';
+                    errorDiv.style.display = 'block';
+                    btn.textContent = 'Sign In';
+                    btn.disabled = false;
+                }
+            })
+            .catch(() => {
+                errorDiv.textContent = 'Connection error';
+                errorDiv.style.display = 'block';
+                btn.textContent = 'Sign In';
+                btn.disabled = false;
+            });
+        });
+
+        // Sign Up
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('regName').value.trim();
+            const username = document.getElementById('regUser').value.trim();
+            const password = document.getElementById('regPass').value.trim();
+            const errorDiv = document.getElementById('errorMsg');
+            const successDiv = document.getElementById('successMsg');
+            const btn = document.getElementById('registerBtn');
+
+            errorDiv.style.display = 'none';
+            successDiv.style.display = 'none';
+
+            if (!name || !username || !password) {
+                errorDiv.textContent = 'All fields are required';
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            btn.textContent = 'Creating...';
+            btn.disabled = true;
+
+            fetch('/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, username, password, role: selectedRole })
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    successDiv.textContent = data.message;
+                    successDiv.style.display = 'block';
+                    document.getElementById('signupForm').reset();
+                    setTimeout(() => showTab('signin'), 1500);
+                } else {
+                    errorDiv.textContent = data.error;
+                    errorDiv.style.display = 'block';
+                }
+                btn.textContent = 'Create Account';
+                btn.disabled = false;
+            })
+            .catch(() => {
+                errorDiv.textContent = 'Connection error';
+                errorDiv.style.display = 'block';
+                btn.textContent = 'Create Account';
+                btn.disabled = false;
+            });
+        });
+    </script>
+</body>
+</html>

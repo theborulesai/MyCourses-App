@@ -1,0 +1,7 @@
+---
+applications:
+- name: mycourses-app
+  random-route: true
+  memory: 256M
+  instances: 1
+  buildpack: sdk-for-nodejs

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professor Dashboard - My Courses App</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">📚 My Courses App</div>
+        <div class="nav-links">
+            <a href="/professor.html" class="nav-link active">Approvals</a>
+            <a href="/catalog.html" class="nav-link">Course Catalog</a>
+            <span id="userName" class="nav-user"></span>
+            <button id="logoutBtn" class="btn btn-small btn-outline">Logout</button>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <div class="page-header">
+            <h1>Professor Dashboard</h1>
+            <p>Review and approve student enrollment requests</p>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="stat-number" id="totalCount">0</div>
+                <div class="stat-label">Total Requests</div>
+            </div>
+            <div class="stat-card stat-pending">
+                <div class="stat-number" id="pendingCount">0</div>
+                <div class="stat-label">Pending</div>
+            </div>
+            <div class="stat-card stat-approved">
+                <div class="stat-number" id="approvedCount">0</div>
+                <div class="stat-label">Approved</div>
+            </div>
+            <div class="stat-card stat-rejected">
+                <div class="stat-number" id="rejectedCount">0</div>
+                <div class="stat-label">Rejected</div>
+            </div>
+        </div>
+
+        <!-- Filter -->
+        <div class="filter-bar">
+            <select id="statusFilter" class="filter-select">
+                <option value="all">All Requests</option>
+                <option value="Pending Approval">Pending</option>
+                <option value="Approved">Approved</option>
+                <option value="Rejected">Rejected</option>
+            </select>
+            <input type="text" id="searchBox" class="search-input" placeholder="Search student or course...">
+        </div>
+
+        <!-- Table -->
+        <div class="table-container">
+            <table class="courses-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Student</th>
+                        <th>Course</th>
+                        <th>Semester</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="requestsBody">
+                    <tr><td colspan="6" class="empty-msg">No enrollment requests yet.</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        let allRequests = [];
+
+        // auth check - professors only
+        fetch('/session').then(r => r.json()).then(data => {
+            if (!data.loggedIn) {
+                window.location.href = '/login.html';
+            } else if (data.user.role !== 'professor') {
+                window.location.href = '/catalog.html';
+            } else {
+                document.getElementById('userName').textContent = '🎓 ' + data.user.name;
+                loadRequests();
+            }
+        });
+
+        function loadRequests() {
+            fetch('/all-enrollments').then(r => r.json()).then(data => {
+                allRequests = data;
+                updateStats(data);
+                displayRequests(data);
+            });
+        }
+
+        function updateStats(data) {
+            document.getElementById('totalCount').textContent = data.length;
+            document.getElementById('pendingCount').textContent = data.filter(e => e.enrollstatus === 'Pending Approval').length;
+            document.getElementById('approvedCount').textContent = data.filter(e => e.enrollstatus === 'Approved').length;
+            document.getElementById('rejectedCount').textContent = data.filter(e => e.enrollstatus === 'Rejected').length;
+        }
+
+        function displayRequests(data) {
+            const tbody = document.getElementById('requestsBody');
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="empty-msg">No enrollment requests found.</td></tr>';
+                return;
+            }
+
+            let html = '';
+            data.forEach(req => {
+                let statusClass = 'status-inprogress';
+                if (req.enrollstatus === 'Approved') statusClass = 'status-completed';
+                if (req.enrollstatus === 'Rejected') statusClass = 'status-dropped';
+
+                let actions = '';
+                if (req.enrollstatus === 'Pending Approval') {
+                    actions = `
+                        <button class="btn btn-edit" style="background:#2e7d32;" onclick="approveReq(${req.id})">✓ Approve</button>
+                        <button class="btn btn-delete" onclick="rejectReq(${req.id})">✗ Reject</button>
+                    `;
+                } else {
+                    actions = '<span style="color:#999;font-size:0.85em;">' + (req.approvedBy || '—') + '</span>';
+                }
+
+                html += `
+                    <tr>
+                        <td>${req.id}</td>
+                        <td><strong>${req.studentName}</strong></td>
+                        <td>${req.courseTitle}</td>
+                        <td><span class="semester-badge">${req.semester}</span></td>
+                        <td><span class="status-badge ${statusClass}">${req.enrollstatus}</span></td>
+                        <td><div class="action-btns">${actions}</div></td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+
+        function approveReq(id) {
+            fetch('/approve/' + id, { method: 'PUT' }).then(r => r.json()).then(data => {
+                if (data.success) { showToast('Approved!', 'success'); loadRequests(); }
+            });
+        }
+
+        function rejectReq(id) {
+            fetch('/reject/' + id, { method: 'PUT' }).then(r => r.json()).then(data => {
+                if (data.success) { showToast('Rejected', 'error'); loadRequests(); }
+            });
+        }
+
+        // filter
+        document.getElementById('statusFilter').addEventListener('change', filterReqs);
+        document.getElementById('searchBox').addEventListener('input', filterReqs);
+
+        function filterReqs() {
+            const status = document.getElementById('statusFilter').value;
+            const search = document.getElementById('searchBox').value.toLowerCase();
+            let filtered = allRequests;
+            if (status !== 'all') filtered = filtered.filter(r => r.enrollstatus === status);
+            if (search) filtered = filtered.filter(r => r.studentName.toLowerCase().includes(search) || r.courseTitle.toLowerCase().includes(search));
+            displayRequests(filtered);
+        }
+
+        // logout
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            fetch('/logout', { method: 'POST' }).then(() => window.location.href = '/login.html');
+        });
+
+        function showToast(msg, type) {
+            const old = document.querySelector('.toast');
+            if (old) old.remove();
+            const t = document.createElement('div');
+            t.className = 'toast ' + (type || '');
+            t.textContent = msg;
+            document.body.appendChild(t);
+            setTimeout(() => t.remove(), 3000);
+        }
+    </script>
+</body>
+</html>

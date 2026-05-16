@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Browse available courses and enroll">
+    <title>Course Catalog - My Courses App</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-brand">📚 My Courses App</div>
+        <div class="nav-links">
+            <a href="/catalog.html" class="nav-link active">Course Catalog</a>
+            <a href="/mycourses.html" class="nav-link">My Courses</a>
+            <span id="userName" class="nav-user"></span>
+            <button id="logoutBtn" class="btn btn-small btn-outline">Logout</button>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <div class="page-header">
+            <h1>Course Catalog</h1>
+            <p>Browse available courses and enroll in the ones you need</p>
+        </div>
+
+        <!-- filter bar -->
+        <div class="filter-bar">
+            <select id="semesterFilter" class="filter-select">
+                <option value="all">All Semesters</option>
+                <option value="Semester 1">Semester 1</option>
+                <option value="Semester 2">Semester 2</option>
+                <option value="Semester 3">Semester 3</option>
+                <option value="Semester 4">Semester 4</option>
+                <option value="Semester 5">Semester 5</option>
+                <option value="Semester 6">Semester 6</option>
+                <option value="Semester 7">Semester 7</option>
+            </select>
+            <input type="text" id="searchBox" class="search-input" placeholder="Search courses...">
+        </div>
+
+        <!-- course cards will go here -->
+        <div id="courseList" class="course-grid">
+            <p class="loading-text">Loading courses...</p>
+        </div>
+    </div>
+
+    <!-- Enroll Modal -->
+    <div id="enrollModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="modal-close" id="closeModal">&times;</span>
+            <h2>Enroll in Course</h2>
+            <div id="modalCourseInfo"></div>
+            <button id="confirmEnroll" class="btn btn-primary btn-full">Confirm Enrollment</button>
+        </div>
+    </div>
+
+    <script src="/js/catalog.js"></script>
+</body>
+</html>

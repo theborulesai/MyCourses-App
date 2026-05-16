@@ -1,0 +1,177 @@
+[
+  {
+    "id": 1,
+    "title": "DS101 - Mathematics for Data Science",
+    "details": "Covers mathematical foundations essential for data science including calculus, optimization, and numerical methods. Credits: 3-1-0-0-4",
+    "semester": "Semester 1",
+    "enrollstatus": "Open"
+  },
+  {
+    "id": 2,
+    "title": "CS105 - Problem Solving through Programming",
+    "details": "Introduction to computational thinking and programming using Python/C. Covers loops, arrays, functions, and basic algorithms. Credits: 3-1-2-0-5",
+    "semester": "Semester 1",
+    "enrollstatus": "Open"
+  },
+  {
+    "id": 3,
+    "title": "DS104 - Data Science and AI Applications",
+    "details": "Overview of real-world applications of data science and artificial intelligence across industries. Credits: 3-0-0-4-4",
+    "semester": "Semester 1",
+    "enrollstatus": "Open"
+  },
+  {
+    "id": 4,
+    "title": "DS105 - Probability and Statistics",
+    "details": "Fundamentals of probability theory, statistical distributions, hypothesis testing, and data analysis techniques. Credits: 3-1-0-0-4",
+    "semester": "Semester 2",
+    "enrollstatus": "Open"
+  },
+  {
+    "id": 5,
+    "title": "CS102 - Data Structures",
+    "details": "Study of fundamental data structures such as stacks, queues, trees, graphs, and hash tables. Prerequisite: CS105. Credits: 3-1-2-0-5",
+    "semester": "Semester 2",
+    "enrollstatus": "Open"
+  },
+  {
+    "id": 6,
+    "title": "DS201 - Data and Business Analytics",
+    "details": "Techniques for extracting insights from business data using descriptive and predictive analytics. Credits: 3-0-2-0-4",
+    "semester": "Semester 3",
+    "enrollstatus": "Open"
+  },
+  {
+    "id": 7,
+    "title": "CS201 - Discrete Mathematics",
+    "details": "Covers logic, set theory, combinatorics, graph theory, and mathematical structures used in CS. Credits: 3-1-0-0-4",
+    "semester": "Semester 3",
+    "enrollstatus": "Open"
+  },
+  {
+    "id": 8,
+    "title": "CS207 - Object Oriented Programming",
+    "details": "Learn OOP concepts using Java/C++ including classes, inheritance, polymorphism, and design patterns. Prerequisite: CS105. Credits: 3-0-2-0-4",
+    "semester": "Semester 3",
+    "enrollstatus": "Open"
+  },
+  {
+    "id": 9,
+    "title": "CS202 - Design & Analysis of Algorithms",
+    "details": "Study of algorithm design paradigms including divide-and-conquer, greedy, dynamic programming. Prerequisite: CS102. Credits: 3-1-2-0-5",
+    "semester": "Semester 3",
+    "enrollstatus": "Open"
+  },
+  {
+    "id": 10,
+    "title": "MA202 - Linear Algebra",
+    "details": "Vector spaces, matrices, eigenvalues, linear transformations, and applications in machine learning. Credits: 3-1-0-0-4",
+    "semester": "Semester 4",
+    "enrollstatus": "Open"
+  },
+  {
+    "id": 11,
+    "title": "DS203 - Operating Systems and Cloud Computing",
+    "details": "Fundamentals of OS concepts and introduction to cloud computing platforms and services. Prerequisite: CS102. Credits: 3-1-0-0-4",
+    "semester": "Semester 4",
+    "enrollstatus": "Open"
+  },
+  {
+    "id": 12,
+    "title": "CS310 - Database Management Systems",
+    "details": "Relational databases, SQL, normalization, transaction processing, and NoSQL databases. Prerequisite: CS102. Credits: 3-1-2-0-5",
+    "semester": "Semester 4",
+    "enrollstatus": "Open"
+  },
+  {
+    "id": 13,
+    "title": "DS204 - Software Engineering and Services",
+    "details": "Software development lifecycle, agile methodologies, microservices, and RESTful API design. Prerequisite: CS105. Credits: 3-0-2-0-4",
+    "semester": "Semester 4",
+    "enrollstatus": "Open"
+  },
+  {
+    "id": 14,
+    "title": "DS301 - Graphs and Social Networks",
+    "details": "Analysis of complex networks, community detection, influence propagation, and graph algorithms. Prerequisite: CS201. Credits: 3-1-0-0-4",
+    "semester": "Semester 5",
+    "enrollstatus": "Open"
+  },
+  {
+    "id": 15,
+    "title": "DS302 - Computer Communication Networks",
+    "details": "Network architectures, protocols (TCP/IP), routing, and network security fundamentals. Prerequisite: CS102. Credits: 3-1-2-0-5",
+    "semester": "Semester 5",
+    "enrollstatus": "Open"
+  },
+  {
+    "id": 16,
+    "title": "DS303 - Algorithms and Artificial Intelligence",
+    "details": "AI search techniques, knowledge representation, planning, and intelligent agent design. Credits: 3-1-0-0-4",
+    "semester": "Semester 5",
+    "enrollstatus": "Open"
+  },
+  {
+    "id": 17,
+    "title": "CS307 - Machine Learning",
+    "details": "Supervised and unsupervised learning, regression, classification, clustering, and neural networks. Prerequisite: MA202. Credits: 3-1-0-0-4",
+    "semester": "Semester 5",
+    "enrollstatus": "Open"
+  },
+  {
+    "id": 18,
+    "title": "DS304 - Visualization and App Development",
+    "details": "Data visualization techniques and building interactive applications using modern frameworks. Credits: 2-1-2-0-4",
+    "semester": "Semester 5",
+    "enrollstatus": "Open"
+  },
+  {
+    "id": 19,
+    "title": "DS305 - Legal Aspects of IT",
+    "details": "IT laws, cyber regulations, intellectual property rights, and data protection laws. Credits: 3-1-0-0-4",
+    "semester": "Semester 6",
+    "enrollstatus": "Open"
+  },
+  {
+    "id": 20,
+    "title": "DS306 - Financial Data Analytics",
+    "details": "Quantitative finance, risk modeling, algorithmic trading, and financial data analysis. Prerequisite: CS201. Credits: 2-1-2-0-4",
+    "semester": "Semester 6",
+    "enrollstatus": "Open"
+  },
+  {
+    "id": 21,
+    "title": "DS308 - Data Security and Privacy",
+    "details": "Encryption algorithms, access control, secure communication, and privacy-preserving techniques. Credits: 3-1-0-0-4",
+    "semester": "Semester 6",
+    "enrollstatus": "Open"
+  },
+  {
+    "id": 22,
+    "title": "DS401 - Healthcare Data Analytics",
+    "details": "Applying data science to healthcare including medical imaging, EHR analysis, and clinical decision support. Prerequisite: CS201. Credits: 3-1-0-0-4",
+    "semester": "Semester 7",
+    "enrollstatus": "Open"
+  },
+  {
+    "id": 23,
+    "title": "CS304 - Artificial Intelligence",
+    "details": "Foundations of AI including search, reasoning, natural language processing, and computer vision. Credits: 3-1-0-0-4",
+    "semester": "Semester 5",
+    "enrollstatus": "Open"
+  },
+  {
+    "id": 24,
+    "title": "CS303 - Computer Networks",
+    "details": "Network layers, TCP/IP protocol suite, LAN/WAN technologies, and network programming. Prerequisite: CS102. Credits: 3-1-2-0-5",
+    "semester": "Semester 5",
+    "enrollstatus": "Open"
+  },
+  {
+    "id": 25,
+    "title": "DS102 - Finance and Accounting",
+    "details": "Fundamentals of financial accounting, balance sheets, income statements, and cost analysis. Credits: 3-0-2-0-4",
+    "semester": "Semester 1",
+    "enrollstatus": "Open"
+  }
+]
